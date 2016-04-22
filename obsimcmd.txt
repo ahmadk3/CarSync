@@ -1,0 +1,4 @@
+OBDSIM CMD:
+obdsim.exe -g gui_fltk -w COM4 //with gui
+obdsim.exe -g Random -w COM4 //Send random values
+
