@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Bluetooth_teste.iml" filepath="$PROJECT_DIR$/Bluetooth_teste.iml" />
+      <module fileurl="file://$PROJECT_DIR$/CarSync.iml" filepath="$PROJECT_DIR$/CarSync.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

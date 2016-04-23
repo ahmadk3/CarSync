@@ -41,21 +41,18 @@ import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
-public class MainActivity extends AppCompatActivity {
+public class ConfiguracaoBluetooth extends AppCompatActivity {
 
     Button bOn,bOff,bList,bConnect;
     TextView text;
 
     private BluetoothAdapter BA;
     private Set<BluetoothDevice>pairedDevices;
-    private ArrayAdapter newDevices;
 
     RadioGroup RG, RG2;
     RelativeLayout rl;
     ArrayList list = new ArrayList();
-    ArrayList newList = new ArrayList();
 
-    private static final UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
     public static String EXTRA_DEVICE_ADDRESS = "device_address";
 
 
@@ -63,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
 
         rl = (RelativeLayout)findViewById(R.id.relativelayout);
@@ -93,8 +91,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        bOn.setOnClickListener(new Button.OnClickListener(){
-            public void onClick(View v){
+        bOn.setOnClickListener(new Button.OnClickListener() {
+            public void onClick(View v) {
                 turnOn(v);
             }
         });
@@ -114,8 +112,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        newDevices = new ArrayAdapter(this, R.layout.activity_main);
+//        Intent getVisible = new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
+//        startActivityForResult(getVisible, 0);
 
+       // newDevicesName = new ArrayAdapter(this, R.layout.activity_main);
+       // newDevicesAddress = new ArrayAdapter(this, R.layout.activity_main);
         IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
         this.registerReceiver(mReceiver, filter);
 
@@ -147,11 +148,11 @@ public class MainActivity extends AppCompatActivity {
     public void getList(View v){
         list.clear();
         RG.removeAllViews();
-        RG2.removeAllViews();
+        RG.clearDisappearingChildren();
 
         pairedDevices = BA.getBondedDevices();
         for(BluetoothDevice bt : pairedDevices)
-            list.add(bt.getName());
+            list.add(bt.getName() + "\n" + bt.getAddress());
 
         RadioButton r[] = new RadioButton[list.size()];
         for(int i = 0; i < list.size(); i++){
@@ -189,10 +190,10 @@ public class MainActivity extends AppCompatActivity {
                 // If it's already paired, skip it, because it's been listed already
                 if (device.getBondState() != BluetoothDevice.BOND_BONDED) {
                     Log.d("DISCOVERY", device.getName() + " " + device.getAddress());
-                    newDevices.add(device.getName() + "\n" + device.getAddress());
+
                     RadioButton rb = new RadioButton(context);
-                    rb.setText(device.getName());
-                    RG2.addView(rb);
+                    rb.setText(device.getName() + "\n" + device.getAddress());
+                    RG.addView(rb);
                 }
                 // When discovery is finished, change the Activity title
             }
@@ -203,21 +204,26 @@ public class MainActivity extends AppCompatActivity {
         try {
             BA.cancelDiscovery();
             BluetoothDevice btd = null;
-            int btDevice = RG.getCheckedRadioButtonId();
-
-            for(BluetoothDevice bt : pairedDevices) {
-                //Aqui será selecionado o dispositivo a ser conectado
-                if (bt.getName().equals(list.get(btDevice - 1))) {
-                    String address = bt.getAddress();
-
-                    Intent intent = new Intent();
-                    intent.putExtra(EXTRA_DEVICE_ADDRESS, address);
-
-                    setResult(Activity.RESULT_OK, intent);
-                    finish();
-                }
+            int id = RG.getCheckedRadioButtonId();
+            View rb = RG.findViewById(id);
+            int radioId = RG.indexOfChild(rb);
+            RadioButton btn = (RadioButton) RG.getChildAt(radioId);
+            String content = (String)btn.getText();
+            Log.d("COD", content);
+            String address = content.substring(content.indexOf('\n') + 1, content.length() - 1);
+            Log.d("COD", address);
+            Log.d("TESTE", "TESTE");
+////            String address = bt.getAddress();
 //
-            }
+//            Intent intent = new Intent();
+//            intent.putExtra(EXTRA_DEVICE_ADDRESS, address);
+//
+//            setResult(Activity.RESULT_OK, intent);
+//            finish();
+
+                    //
+
+
            // Toast.makeText(getApplicationContext(),"Connecting to "+list.get(btDevice - 1).toString(),Toast.LENGTH_SHORT).show();
         }catch(Exception ee){
             Log.d("ERRO:", "2");
