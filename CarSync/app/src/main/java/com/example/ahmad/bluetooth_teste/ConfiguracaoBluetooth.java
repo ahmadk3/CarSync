@@ -49,11 +49,12 @@ public class ConfiguracaoBluetooth extends AppCompatActivity {
     private BluetoothAdapter BA;
     private Set<BluetoothDevice>pairedDevices;
 
-    RadioGroup RG, RG2;
+    RadioGroup RG;
     RelativeLayout rl;
     ArrayList list = new ArrayList();
 
     public static String EXTRA_DEVICE_ADDRESS = "device_address";
+    public static String connectedDevice;
 
 
     @Override
@@ -75,21 +76,7 @@ public class ConfiguracaoBluetooth extends AppCompatActivity {
         text = (TextView)findViewById(R.id.textView_BluetoothTeste);
 
         RG = (RadioGroup)findViewById(R.id.radioGroup);
-        RG.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                if(RG2.getCheckedRadioButtonId() != -1)
-                    RG2.clearCheck();
-            }
-        });
-        RG2 = (RadioGroup)findViewById(R.id.radioGroup2);
-        RG2.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                if(RG.getCheckedRadioButtonId() != -1)
-                    RG.clearCheck();
-            }
-        });
+
 
         bOn.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
@@ -210,23 +197,18 @@ public class ConfiguracaoBluetooth extends AppCompatActivity {
             RadioButton btn = (RadioButton) RG.getChildAt(radioId);
             String content = (String)btn.getText();
             Log.d("COD", content);
-            String address = content.substring(content.indexOf('\n') + 1, content.length() - 1);
+            String address = content.substring(content.indexOf('\n') + 1, content.length());
+            connectedDevice = content.substring(0, content.indexOf('\n') - 1);
             Log.d("COD", address);
-            Log.d("TESTE", "TESTE");
-////            String address = bt.getAddress();
-//
-//            Intent intent = new Intent();
-//            intent.putExtra(EXTRA_DEVICE_ADDRESS, address);
-//
-//            setResult(Activity.RESULT_OK, intent);
-//            finish();
 
-                    //
+            Intent intent = new Intent();
+            intent.putExtra(EXTRA_DEVICE_ADDRESS, address);
 
+            setResult(Activity.RESULT_OK, intent);
+            finish();
 
-           // Toast.makeText(getApplicationContext(),"Connecting to "+list.get(btDevice - 1).toString(),Toast.LENGTH_SHORT).show();
         }catch(Exception ee){
-            Log.d("ERRO:", "2");
+            Log.d("ERRO:", "Falha na conexão");
 
         }
     }

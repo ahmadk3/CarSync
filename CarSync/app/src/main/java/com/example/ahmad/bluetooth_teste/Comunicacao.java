@@ -36,10 +36,10 @@ public class Comunicacao extends AppCompatActivity{
     private String rawData = null;
 
     private static final UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
-
+//Toast.makeText(getApplicationContext(),"Conectando a "+ ConfiguracaoBluetooth.connectedDevice,Toast.LENGTH_SHORT).show();
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.pedidos);
+        setContentView(R.layout.start);
 
         BA = BluetoothAdapter.getDefaultAdapter();
 
@@ -75,6 +75,8 @@ public class Comunicacao extends AppCompatActivity{
                         outputStream = socket.getOutputStream();
                         Log.d("Run", " foi");
                         runConectionConfigurations(inputStream, outputStream);
+                        Intent intent = new Intent(this, Requisicoes.class);
+                        startActivity(intent);
                     } catch (IOException e) {
 
                         Toast.makeText(this, "Ocorreu um erro!", Toast.LENGTH_LONG).show();

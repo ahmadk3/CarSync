@@ -14,7 +14,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Bluetooth Teste"
+        android:text="Configurações"
         android:id="@+id/textView_BluetoothTeste"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
@@ -24,7 +24,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TURN ON"
+        android:text="Bluetooth ON"
         android:id="@+id/button_on"
         android:layout_below="@+id/textView_BluetoothTeste"
         android:layout_alignParentLeft="true"
@@ -35,7 +35,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TURN OFF"
+        android:text="bluetooth off"
         android:id="@+id/button_off"
         android:layout_below="@+id/textView_BluetoothTeste"
         android:layout_alignRight="@+id/button_list"
@@ -46,7 +46,7 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="GET LIST"
+        android:text="Buscar Dispositivos"
         android:id="@+id/button_list"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
@@ -56,9 +56,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Paired Devices:"
+        android:text="Dispositivos:"
         android:id="@+id/textView_pairedDevices"
-        android:textSize="26dp"
+        android:textSize="36dp"
         android:textColor="#000000"
         android:layout_below="@+id/button_list"
         android:layout_alignParentLeft="true"
@@ -68,7 +68,7 @@
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="connect"
+        android:text="Conectar"
         android:id="@+id/button_connect"
         android:layout_alignTop="@+id/textView_pairedDevices"
         android:layout_alignRight="@+id/scrollView"
@@ -81,8 +81,7 @@
         android:fillViewport="false"
         android:layout_below="@+id/button_connect"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_above="@+id/textView_newDevices">
+        android:layout_alignParentStart="true">
 
         <RadioGroup
             android:layout_width="match_parent"
@@ -93,48 +92,6 @@
             android:id="@+id/radioGroup">
 
         </RadioGroup>
-    </ScrollView>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="New Devices:"
-        android:layout_marginBottom="125dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:id="@+id/textView_newDevices"
-        android:textSize="26dp"
-        android:textColor="#000000" />
-
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="connect"
-        android:id="@+id/button_connectNew"
-        android:layout_below="@+id/scrollView"
-        android:layout_alignRight="@+id/scrollView"
-        android:layout_alignEnd="@+id/scrollView"
-        android:visibility="invisible" />
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/scrollView2"
-        android:fillViewport="false"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/button_connectNew">
-
-        <RadioGroup
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/textView_pairedDevices"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:id="@+id/radioGroup2" />
     </ScrollView>
 
 </RelativeLayout>

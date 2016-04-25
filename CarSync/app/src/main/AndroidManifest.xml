@@ -12,14 +12,34 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".Comunicacao">
+        <activity
+            android:name=".Comunicacao"
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ConfiguracaoBluetooth"/>
+
+        <activity
+            android:name=".ConfiguracaoBluetooth"
+            android:label="@string/config">
+            <intent-filter>
+                <action android:name=".ConfiguracaoBluetooth" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".Requisicoes"
+            android:label="@string/requisicoes">
+            <intent-filter>
+                <action android:name=".Requisicoes"/>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

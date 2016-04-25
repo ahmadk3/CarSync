@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">CarSync</string>
+    <string name="requisicoes">Requisições</string>
+    <string name="config">Configurações</string>
 </resources>
