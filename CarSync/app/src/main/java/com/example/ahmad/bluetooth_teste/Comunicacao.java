@@ -24,16 +24,16 @@ import java.util.UUID;
 public class Comunicacao extends AppCompatActivity{
 
     private final int REQUEST_CONNECT_DEVICE = 1;
-    private BluetoothAdapter BA = null;
+    private static BluetoothAdapter BA = null;
 
-    private BluetoothSocket socket = null;
-    private BluetoothDevice device = null;
+    private static BluetoothSocket socket = null;
+    private static BluetoothDevice device = null;
 
-    private InputStream inputStream = null;
-    private OutputStream outputStream = null;
+    private static InputStream in = null;
+    private static OutputStream out = null;
 
-    private String resposta = null;
-    private String rawData = null;
+    private static String resposta = null;
+    private static String rawData = null;
 
     private static final UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
 //Toast.makeText(getApplicationContext(),"Conectando a "+ ConfiguracaoBluetooth.connectedDevice,Toast.LENGTH_SHORT).show();
@@ -71,10 +71,10 @@ public class Comunicacao extends AppCompatActivity{
                         socket.connect();
 
                         // Obtem os fluxos de entrada e saida que lidam com transmissões através do socket
-                        inputStream = socket.getInputStream();
-                        outputStream = socket.getOutputStream();
+                        in = socket.getInputStream();
+                        out = socket.getOutputStream();
                         Log.d("Run", " foi");
-                        runConectionConfigurations(inputStream, outputStream);
+                        runConectionConfigurations();
                         Intent intent = new Intent(this, Requisicoes.class);
                         startActivity(intent);
                     } catch (IOException e) {
@@ -86,18 +86,18 @@ public class Comunicacao extends AppCompatActivity{
         }
     }
 
-    private void runConectionConfigurations (InputStream in, OutputStream out){
+    private void runConectionConfigurations (){
 
-        msgRun("AT Z", in, out);
-        msgRun("AT E0", in, out);
-        msgRun("AT E0", in, out);
-        msgRun("AT L0", in, out);
-        msgRun("AT ST" + Integer.toHexString(0xFF & 62), in, out);
+        msgRun("AT Z");
+        msgRun("AT E0");
+        msgRun("AT E0");
+        msgRun("AT L0");
+        msgRun("AT ST" + Integer.toHexString(0xFF & 62));
         // Protocolo
-        msgRun("AT SP 0", in, out);
+        msgRun("AT SP 0");
     }
 
-    public void msgRun (String cod, InputStream in, OutputStream out){
+    public static String msgRun (String cod){
         try {
             out.write((cod + "\r").getBytes());
             out.flush();
@@ -115,9 +115,10 @@ public class Comunicacao extends AppCompatActivity{
             e.printStackTrace();
             Log.d("msgRun", "Nao foi possivel receber msg " + cod );
         }
+        return resposta;
     }
 
-    protected String readRawData(InputStream in) throws IOException {
+    protected static String readRawData(InputStream in) throws IOException {
         byte b = 0;
         StringBuilder res = new StringBuilder();
 
