@@ -1,4 +1,4 @@
-package com.example.ahmad.bluetooth_teste;
+package com.example.ahmad.bluetooth_teste.Activities;
 
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
@@ -11,6 +11,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
+
+import com.example.ahmad.bluetooth_teste.R;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -88,32 +90,32 @@ public class Comunicacao extends AppCompatActivity{
 
     private void runConectionConfigurations (){
 
-        msgRun("AT Z");
-        msgRun("AT E0");
-        msgRun("AT E0");
-        msgRun("AT L0");
-        msgRun("AT ST" + Integer.toHexString(0xFF & 62));
+        sendReceiveOBD("AT Z");
+        sendReceiveOBD("AT E0");
+        sendReceiveOBD("AT E0");
+        sendReceiveOBD("AT L0");
+        sendReceiveOBD("AT ST" + Integer.toHexString(0xFF & 62));
         // Protocolo
-        msgRun("AT SP 0");
+        sendReceiveOBD("AT SP 0");
     }
 
-    public static String msgRun (String cod){
+    public synchronized static String sendReceiveOBD(String cod){
         try {
             out.write((cod + "\r").getBytes());
             out.flush();
-            Log.d("msgRun", "Mandou MSG");
+            Log.d("sendReceiveOBD", "Mandou MSG");
         } catch (IOException e) {
             e.printStackTrace();
-            Log.d("msgRun", "Nao foi possivel mandar msg " + cod );
+            Log.d("sendReceiveOBD", "Nao foi possivel mandar msg " + cod );
         }
 
         try {
             resposta = readRawData(in);
-            Log.d("msgRun", "Recebeu Resp: " + resposta);
+            Log.d("sendReceiveOBD", "Recebeu Resp: " + resposta);
 
         } catch (IOException e) {
             e.printStackTrace();
-            Log.d("msgRun", "Nao foi possivel receber msg " + cod );
+            Log.d("sendReceiveOBD", "Nao foi possivel receber msg " + cod );
         }
         return resposta;
     }
@@ -136,5 +138,13 @@ public class Comunicacao extends AppCompatActivity{
         rawData = rawData.replaceAll("\\s", "");//removes all [ \t\n\x0B\f\r]
 
         return rawData;
+    }
+
+    public static InputStream getIn() {
+        return in;
+    }
+
+    public static OutputStream getOut() {
+        return out;
     }
 }

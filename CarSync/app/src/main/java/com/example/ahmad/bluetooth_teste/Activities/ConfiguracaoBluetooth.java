@@ -1,4 +1,4 @@
-package com.example.ahmad.bluetooth_teste;
+package com.example.ahmad.bluetooth_teste.Activities;
 
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
@@ -31,6 +31,8 @@ import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.ahmad.bluetooth_teste.R;
 
 import java.io.InputStream;
 import java.io.OutputStream;
