@@ -40,10 +40,11 @@
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="0 Km/h"
                 android:id="@+id/textView_velocidade"
-                android:layout_alignBottom="@+id/button_velocidade"
                 android:layout_toRightOf="@+id/button_velocidade"
                 android:layout_toEndOf="@+id/button_velocidade"
-                android:textSize="36dp" />
+                android:textSize="36dp"
+                android:layout_above="@+id/button_rpm"
+                android:layout_alignTop="@+id/button_velocidade" />
 
             <Button
                 android:layout_width="wrap_content"
@@ -63,14 +64,14 @@
                 android:text="0 RPM"
                 android:id="@+id/textView_rpm"
                 android:textSize="36dp"
-                android:layout_alignBottom="@+id/button_rpm"
                 android:layout_toRightOf="@+id/button_rpm"
-                android:layout_toEndOf="@+id/button_rpm" />
+                android:layout_toEndOf="@+id/button_rpm"
+                android:layout_alignBottom="@+id/button_rpm" />
 
         </RelativeLayout>
 
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:id="@+id/SEGUNDA"
@@ -80,13 +81,24 @@
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Botao B"
-                android:id="@+id/buttonB"
-                android:layout_below="@+id/textView"
+                android:text="COMBUSTIVEL"
+                android:id="@+id/button_combustivel"
+                android:layout_alignParentTop="true"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true" />
 
-        </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="0 %"
+                android:id="@+id/textView_combustivel"
+                android:textSize="36dp"
+                android:layout_alignBottom="@+id/button_combustivel"
+                android:layout_toRightOf="@+id/button_combustivel"
+                android:layout_toEndOf="@+id/button_combustivel" />
+
+        </RelativeLayout>
 
         <LinearLayout
             android:layout_width="fill_parent"

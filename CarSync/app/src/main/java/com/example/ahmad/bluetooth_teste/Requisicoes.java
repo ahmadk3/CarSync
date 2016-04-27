@@ -31,9 +31,11 @@ public class Requisicoes extends AppCompatActivity{
 
     private Button btnVelocidade;
     private Button btnRpm;
+    private Button btnCombustivel;
 
     private TextView txtVelocidade;
     private TextView txtRPM;
+    private TextView txtCombustivel;
 
     public void onCreate(Bundle savedInstanceState)
     {
@@ -45,7 +47,7 @@ public class Requisicoes extends AppCompatActivity{
 
         TabHost.TabSpec aba1=tabHost.newTabSpec("PRIMEIRA");
         aba1.setContent(R.id.PRIMEIRA);
-        aba1.setIndicator("PRIMEIRA");
+        aba1.setIndicator("PERFORMANCE");
 
         TabHost.TabSpec aba2=tabHost.newTabSpec("SEGUNDA");
         aba2.setContent(R.id.SEGUNDA);
@@ -59,8 +61,11 @@ public class Requisicoes extends AppCompatActivity{
         tabHost.addTab(aba2);
         tabHost.addTab(aba3);
 
+
+
         txtVelocidade = (TextView)findViewById(R.id.textView_velocidade);
         txtRPM = (TextView)findViewById(R.id.textView_rpm);
+        txtCombustivel = (TextView)findViewById(R.id.textView_combustivel);
 
         btnVelocidade = (Button)findViewById(R.id.button_velocidade);
         btnVelocidade.setOnClickListener(new View.OnClickListener() {
@@ -77,6 +82,19 @@ public class Requisicoes extends AppCompatActivity{
                 getRPM(v);
             }
         });
+
+        btnCombustivel = (Button)findViewById(R.id.button_combustivel);
+        btnCombustivel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getCombustivel(v);
+            }
+        });
+    }
+
+    public void getCombustivel(View v){
+        String respDec = Comunicacao.msgRun("012F");
+        txtCombustivel.setText(respDec + "%");
     }
 
     public void getVelocidade(View v){
@@ -86,10 +104,15 @@ public class Requisicoes extends AppCompatActivity{
         Long i = Long.parseLong(respDec, 16);
         Log.d("RESP", Long.toString(i));
         txtVelocidade.setText(Long.toString(i) + " Km/h");
+
     }
 
     public void getRPM(View v){
-        String resp = Comunicacao.msgRun("010C");
-        txtRPM.setText(resp);
+        String respDec = Comunicacao.msgRun("010C");
+        respDec = respDec.substring(respDec.length() - 4);
+        Long i = Long.parseLong(respDec, 16);
+        i /= 4;
+        Log.d("RESP", respDec);
+        txtRPM.setText(Long.toString(i)+ " RPM");
     }
 }

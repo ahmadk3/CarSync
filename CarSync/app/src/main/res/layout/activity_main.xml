@@ -29,8 +29,8 @@
         android:layout_below="@+id/textView_BluetoothTeste"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_alignRight="@+id/textView_pairedDevices"
-        android:layout_alignEnd="@+id/textView_pairedDevices" />
+        android:layout_toLeftOf="@+id/button_off"
+        android:layout_toStartOf="@+id/button_off" />
 
     <Button
         android:layout_width="wrap_content"
