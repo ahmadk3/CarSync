@@ -38,11 +38,10 @@ public class Comunicacao extends AppCompatActivity{
     private static String rawData = null;
 
     private static final UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
-//Toast.makeText(getApplicationContext(),"Conectando a "+ ConfiguracaoBluetooth.connectedDevice,Toast.LENGTH_SHORT).show();
+
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.start);
-
         BA = BluetoothAdapter.getDefaultAdapter();
 
         //Inicia a classe de conexao ConfiguracaoBluetooth
@@ -81,7 +80,9 @@ public class Comunicacao extends AppCompatActivity{
                         startActivity(intent);
                     } catch (IOException e) {
 
-                        Toast.makeText(this, "Ocorreu um erro!", Toast.LENGTH_LONG).show();
+                        Toast.makeText(this, "Erro de conexão\nFavor verificar o dispositivo", Toast.LENGTH_LONG).show();
+                        Intent serverIntent = new Intent(this, ConfiguracaoBluetooth.class);
+                        startActivityForResult(serverIntent, REQUEST_CONNECT_DEVICE);
                     }
                 }
                 break;
@@ -138,13 +139,5 @@ public class Comunicacao extends AppCompatActivity{
         rawData = rawData.replaceAll("\\s", "");//removes all [ \t\n\x0B\f\r]
 
         return rawData;
-    }
-
-    public static InputStream getIn() {
-        return in;
-    }
-
-    public static OutputStream getOut() {
-        return out;
     }
 }

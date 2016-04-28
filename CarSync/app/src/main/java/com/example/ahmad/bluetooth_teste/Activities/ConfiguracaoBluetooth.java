@@ -64,8 +64,6 @@ public class ConfiguracaoBluetooth extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-
         rl = (RelativeLayout)findViewById(R.id.relativelayout);
 
         BA = BluetoothAdapter.getDefaultAdapter();
@@ -101,15 +99,10 @@ public class ConfiguracaoBluetooth extends AppCompatActivity {
             }
         });
 
-//        Intent getVisible = new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
-//        startActivityForResult(getVisible, 0);
-
-       // newDevicesName = new ArrayAdapter(this, R.layout.activity_main);
-       // newDevicesAddress = new ArrayAdapter(this, R.layout.activity_main);
         IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
         this.registerReceiver(mReceiver, filter);
 
-        // Register for broadcasts when discovery has finished
+        // Inicia um sinal de broadcast
         filter = new IntentFilter(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
         this.registerReceiver(mReceiver, filter);
     }
@@ -139,52 +132,51 @@ public class ConfiguracaoBluetooth extends AppCompatActivity {
         RG.removeAllViews();
         RG.clearDisappearingChildren();
 
+        //Recebe todos os dispositivos já pareados
         pairedDevices = BA.getBondedDevices();
         for(BluetoothDevice bt : pairedDevices)
             list.add(bt.getName() + "\n" + bt.getAddress());
 
+        //Adiciona os dispositivos já pareados a um RadioGroup
         RadioButton r[] = new RadioButton[list.size()];
         for(int i = 0; i < list.size(); i++){
             r[i] = new RadioButton(this);
             r[i].setText(list.get(i).toString());
             RG.addView(r[i]);
         }
-
+        //Busca novos dispositivos
         doDiscovery();
-        //Toast.makeText(getApplicationContext(),"Showing Paired Devices" + newDevices.size(),Toast.LENGTH_SHORT).show();
 
     }
 
     private void doDiscovery() {
-        // If we're already discovering, stop it
+        // Caso já esteja buscando
         if (BA.isDiscovering()) {
             BA.cancelDiscovery();
         }
 
-        // Request discover from BluetoothAdapter
-        Log.d("start", "NEW");
+        // Começa a busca por novos dispositivos
         BA.startDiscovery();
-        Log.d("startou", "NEW");
+        Log.d("STARTDISCOVERY", "TRUE");
     }
 
     private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
-
-            // When discovery finds a device
+            // Quando um dispositivo é encontrado
             if (BluetoothDevice.ACTION_FOUND.equals(action)) {
-                // Get the BluetoothDevice object from the Intent
+                // Recebe o novo dispositivo
                 BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-                // If it's already paired, skip it, because it's been listed already
+                // Caso não esteja pareado
                 if (device.getBondState() != BluetoothDevice.BOND_BONDED) {
-                    Log.d("DISCOVERY", device.getName() + " " + device.getAddress());
+                    Log.d("DISCOVERD", device.getName() + " " + device.getAddress());
 
+                    //Adiciona o novo dispositivo ao RadioGroup
                     RadioButton rb = new RadioButton(context);
                     rb.setText(device.getName() + "\n" + device.getAddress());
                     RG.addView(rb);
                 }
-                // When discovery is finished, change the Activity title
             }
         }
     };
@@ -192,38 +184,35 @@ public class ConfiguracaoBluetooth extends AppCompatActivity {
     public void connect(View v){
         try {
             BA.cancelDiscovery();
-            BluetoothDevice btd = null;
+            //Pega as inforamações do dispositivo selecionado
             int id = RG.getCheckedRadioButtonId();
             View rb = RG.findViewById(id);
             int radioId = RG.indexOfChild(rb);
-            RadioButton btn = (RadioButton) RG.getChildAt(radioId);
-            String content = (String)btn.getText();
-            Log.d("COD", content);
+            RadioButton b = (RadioButton) RG.getChildAt(radioId);
+            String content = (String)b.getText();
+
             String address = content.substring(content.indexOf('\n') + 1, content.length());
             connectedDevice = content.substring(0, content.indexOf('\n') - 1);
-            Log.d("COD", address);
+            Log.d("CONNECTED ADDRESS ", address);
 
             Intent intent = new Intent();
             intent.putExtra(EXTRA_DEVICE_ADDRESS, address);
-
+            //Finaliza a Activity e retorna ok para a classe Comunicacao
             setResult(Activity.RESULT_OK, intent);
             finish();
 
         }catch(Exception ee){
-            Log.d("ERRO:", "Falha na conexão");
-
+            Log.d("ERRO", "Falha na conexão");
         }
     }
 
     protected void onDestroy() {
         super.onDestroy();
 
-        // Make sure we're not doing discovery anymore
+        // Para ter certeza de que não está sendo feito discovery
         if (BA != null) {
             BA.cancelDiscovery();
         }
-
-        // Unregister broadcast listeners
         this.unregisterReceiver(mReceiver);
     }
 }

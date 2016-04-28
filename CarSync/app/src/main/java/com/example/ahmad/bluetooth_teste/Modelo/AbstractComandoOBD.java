@@ -15,8 +15,7 @@ import java.util.ResourceBundle;
  * Created by PamelaPeixinho on 4/27/16.
  */
 public abstract class AbstractComandoOBD extends Thread{
-    private final InputStream in = Comunicacao.getIn();
-    private final OutputStream out = Comunicacao.getOut();
+
     private String PID;
     private String resposta;
 
@@ -32,7 +31,11 @@ public abstract class AbstractComandoOBD extends Thread{
             calculate();
             Requisicoes.respVelocidade = resposta + " Km/h";
             Requisicoes.updateVelocidadeView();
-//            Thread.sleep(100);
+            try {
+                Thread.sleep(50);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             Log.d("Velocidade: ", resposta);
         }
 }
