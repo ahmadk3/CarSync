@@ -104,7 +104,6 @@ public class Comunicacao extends AppCompatActivity{
         try {
             out.write((cod + "\r").getBytes());
             out.flush();
-            Log.d("sendReceiveOBD", "Mandou MSG");
         } catch (IOException e) {
             e.printStackTrace();
             Log.d("sendReceiveOBD", "Nao foi possivel mandar msg " + cod );

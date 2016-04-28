@@ -18,65 +18,13 @@
 
         >
 
+
         <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:id="@+id/PRIMEIRA"
-            android:paddingTop="160px">
-
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="VELOCIDADE"
-                android:id="@+id/button_velocidade"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="0 Km/h"
-                android:id="@+id/textView_velocidade"
-                android:layout_toRightOf="@+id/button_velocidade"
-                android:layout_toEndOf="@+id/button_velocidade"
-                android:textSize="36dp"
-                android:layout_above="@+id/button_rpm"
-                android:layout_alignTop="@+id/button_velocidade" />
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="RPM"
-                android:id="@+id/button_rpm"
-                android:layout_below="@+id/button_velocidade"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_toLeftOf="@+id/textView_velocidade"
-                android:layout_toStartOf="@+id/textView_velocidade" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="0 RPM"
-                android:id="@+id/textView_rpm"
-                android:textSize="36dp"
-                android:layout_toRightOf="@+id/button_rpm"
-                android:layout_toEndOf="@+id/button_rpm"
-                android:layout_alignBottom="@+id/button_rpm" />
-
-        </RelativeLayout>
-
-
-        <RelativeLayout
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:id="@+id/SEGUNDA"
-            android:paddingTop="160px">
-
+            android:paddingTop="160px"
+            android:layout_gravity="center_horizontal|top">
 
             <Button
                 android:layout_width="wrap_content"
@@ -86,6 +34,41 @@
                 android:layout_alignParentTop="true"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="0 Km/h"
+                android:id="@+id/textView_velocidade"
+                android:textSize="36dp"
+                android:layout_below="@+id/textView_rpm"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="0 RPM"
+                android:id="@+id/textView_rpm"
+                android:textSize="36dp"
+                android:layout_alignBottom="@+id/button_combustivel"
+                android:layout_toRightOf="@+id/button_combustivel"
+                android:layout_toEndOf="@+id/button_combustivel" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:id="@+id/SEGUNDA"
+            android:paddingTop="160px"
+            android:layout_gravity="center_horizontal|top">
+
+
+
 
             <TextView
                 android:layout_width="wrap_content"
@@ -104,7 +87,8 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:id="@+id/TERCEIRA"
-            android:paddingTop="160px">
+            android:paddingTop="160px"
+            android:layout_gravity="center_horizontal|top">
 
 
             <Button

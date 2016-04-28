@@ -25,20 +25,7 @@ public abstract class AbstractComandoOBD extends Thread{
     }
 
     @Override
-    public void run() {
-        while(true){
-            resposta = Comunicacao.sendReceiveOBD(PID); //synchronized function
-            calculate();
-            Requisicoes.respVelocidade = resposta + " Km/h";
-            Requisicoes.updateVelocidadeView();
-            try {
-                Thread.sleep(50);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            Log.d("Velocidade: ", resposta);
-        }
-}
+    public abstract void run();
 
     protected abstract void calculate();
 

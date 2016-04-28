@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.TabHost;
 import android.widget.TextView;
 
+import com.example.ahmad.bluetooth_teste.Modelo.RPM;
 import com.example.ahmad.bluetooth_teste.Modelo.Velocidade;
 import com.example.ahmad.bluetooth_teste.R;
 
@@ -20,9 +21,8 @@ import com.example.ahmad.bluetooth_teste.R;
 public class Requisicoes extends AppCompatActivity{
 
     private Velocidade velocidade;
+    private RPM rpm;
 
-    private Button btnVelocidade;
-    private Button btnRpm;
     private Button btnCombustivel;
 
     private static TextView txtVelocidade;
@@ -30,15 +30,18 @@ public class Requisicoes extends AppCompatActivity{
     private static TextView txtCombustivel;
 
     public static String respVelocidade;
+    public static String respRPM;
+
+    private TabHost tabHost;
+
     private static Handler mHandler = new Handler();
-    protected Context ctx;
 
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.pedidos);
 
-        TabHost tabHost=(TabHost)findViewById(R.id.tabHost);
+        tabHost=(TabHost)findViewById(R.id.tabHost);
         tabHost.setup();
 
         TabHost.TabSpec aba1=tabHost.newTabSpec("PRIMEIRA");
@@ -57,41 +60,17 @@ public class Requisicoes extends AppCompatActivity{
         tabHost.addTab(aba2);
         tabHost.addTab(aba3);
 
-        ctx = Requisicoes.this;
+
         velocidade = new Velocidade();
-
-
+        rpm = new RPM();
 
         txtVelocidade = (TextView)findViewById(R.id.textView_velocidade);
         txtRPM = (TextView)findViewById(R.id.textView_rpm);
         txtCombustivel = (TextView)findViewById(R.id.textView_combustivel);
 
-//        ((Requisicoes) ctx).runOnUiThread(new Runnable() {
-//            @Override
-//            public void run() {
-////                while(true)
-//                    ((Requisicoes) ctx).updateVelocidadeView();
-//            }
-//        });
+        velocidade.start();
+        rpm.start();
 
-        btnVelocidade = (Button)findViewById(R.id.button_velocidade);
-        btnVelocidade.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                velocidade.start();
-                updateVelocidadeView();
-//                txtVelocidade.setText(respVelocidade);
-//                velocidade.interrupt();
-            }
-        });
-
-        btnRpm = (Button)findViewById(R.id.button_rpm);
-        btnRpm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getRPM(v);
-            }
-        });
 
         btnCombustivel = (Button)findViewById(R.id.button_combustivel);
         btnCombustivel.setOnClickListener(new View.OnClickListener() {
@@ -100,12 +79,21 @@ public class Requisicoes extends AppCompatActivity{
                 getCombustivel(v);
             }
         });
-    }
 
+        tabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
+            @Override
+            public void onTabChanged(String tabId) {
+
+                Log.d("COMB 2", " "+ tabHost.getCurrentTab() + " " + tabId);
+            }
+        });
+    }
     public void getCombustivel(View v){
         String respDec = Comunicacao.sendReceiveOBD("012F");
         txtCombustivel.setText(respDec + "%");
+
     }
+
 
     public void getVelocidade(View v){
 
@@ -126,12 +114,13 @@ public class Requisicoes extends AppCompatActivity{
         txtRPM.setText(Long.toString(i)+ " RPM");
     }
 
-    public synchronized static void updateVelocidadeView(){
+    public synchronized static void updateRequisicoesView(){
         mHandler.post(new Runnable() {
             @Override
             public void run() {
 //                while(true)
                 txtVelocidade.setText(respVelocidade);
+                txtRPM.setText(respRPM);
             }
         });
     }
