@@ -17,7 +17,7 @@ public class RPM extends AbstractComandoOBD {
         while(true){
             setResposta(Comunicacao.sendReceiveOBD(getPID())); //synchronized function
             calculate();
-            Requisicoes.respRPM = getResposta() + " RPM";
+            Requisicoes.respRPM = getResposta();
             Requisicoes.updateRequisicoesView();
             try {
                 Thread.sleep(50);

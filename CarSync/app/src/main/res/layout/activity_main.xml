@@ -21,27 +21,53 @@
         android:layout_alignParentStart="true"
         android:textSize="42dp"/>
 
+<!-- TESTE COM BOTOES _ Pamela-->
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width= "150dp"
         android:layout_height="wrap_content"
         android:text="Bluetooth ON"
         android:id="@+id/button_on"
         android:layout_below="@+id/textView_BluetoothTeste"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_toLeftOf="@+id/button_off"
-        android:layout_toStartOf="@+id/button_off" />
+        android:layout_weight="1"
+    />
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:text="bluetooth off"
+        android:text="bluetooth OFF"
         android:id="@+id/button_off"
         android:layout_below="@+id/textView_BluetoothTeste"
-        android:layout_alignRight="@+id/button_list"
-        android:layout_alignEnd="@+id/button_list"
-        android:layout_toRightOf="@+id/textView_pairedDevices"
-        android:layout_toEndOf="@+id/textView_pairedDevices" />
+        android:layout_toRightOf="@+id/button_on"
+        android:layout_weight="1"
+    />
+
+<!-- TESTE COM BOTOES _ Pamela-->
+<!--ANTIGOS BOTOES-->
+    <!--<Button-->
+        <!--android:layout_width= "wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="Bluetooth ON"-->
+        <!--android:id="@+id/button_on"-->
+        <!--android:layout_below="@+id/textView_BluetoothTeste"-->
+        <!--android:layout_alignParentLeft="true"-->
+        <!--android:layout_alignParentStart="true"-->
+        <!--android:layout_toLeftOf="@+id/button_off"-->
+        <!--android:layout_toStartOf="@+id/button_off" />-->
+
+    <!--<Button-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="bluetooth OFF"-->
+        <!--android:id="@+id/button_off"-->
+        <!--android:layout_below="@+id/textView_BluetoothTeste"-->
+        <!--android:layout_alignRight="@+id/button_list"-->
+        <!--android:layout_alignEnd="@+id/button_list"-->
+        <!--android:layout_toRightOf="@+id/textView_pairedDevices"-->
+        <!--android:layout_toEndOf="@+id/textView_pairedDevices" />-->
+<!--ANTIGOS BOTOES-->
+
 
     <Button
         android:layout_width="match_parent"
@@ -62,7 +88,8 @@
         android:textColor="#000000"
         android:layout_below="@+id/button_list"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+    />
 
     <Button
         style="?android:attr/buttonStyleSmall"
@@ -89,7 +116,8 @@
             android:layout_below="@+id/textView_pairedDevices"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:id="@+id/radioGroup">
+            android:id="@+id/radioGroup"
+            >
 
         </RadioGroup>
     </ScrollView>

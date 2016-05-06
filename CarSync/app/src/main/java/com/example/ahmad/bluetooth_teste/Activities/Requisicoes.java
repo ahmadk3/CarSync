@@ -20,9 +20,8 @@ import com.example.ahmad.bluetooth_teste.R;
  */
 public class Requisicoes extends AppCompatActivity{
 
-    private Velocidade velocidade;
-    private RPM rpm;
 
+    private TabHost tabHost;
     private Button btnCombustivel;
 
     private static TextView txtVelocidade;
@@ -32,27 +31,30 @@ public class Requisicoes extends AppCompatActivity{
     public static String respVelocidade;
     public static String respRPM;
 
-    private TabHost tabHost;
-
+    private Velocidade velocidade;
+    private RPM rpm;
     private static Handler mHandler = new Handler();
 
-    public void onCreate(Bundle savedInstanceState)
-    {
+    private String tabAnterior;
+
+    public void onCreate(Bundle savedInstanceState){
+
+        //Set Layout
         super.onCreate(savedInstanceState);
         setContentView(R.layout.pedidos);
 
         tabHost=(TabHost)findViewById(R.id.tabHost);
         tabHost.setup();
 
-        TabHost.TabSpec aba1=tabHost.newTabSpec("PRIMEIRA");
+        TabHost.TabSpec aba1=tabHost.newTabSpec("0");
         aba1.setContent(R.id.PRIMEIRA);
         aba1.setIndicator("PERFORMANCE");
 
-        TabHost.TabSpec aba2=tabHost.newTabSpec("SEGUNDA");
+        TabHost.TabSpec aba2=tabHost.newTabSpec("1");
         aba2.setContent(R.id.SEGUNDA);
         aba2.setIndicator("SEGUNDA");
 
-        TabHost.TabSpec aba3=tabHost.newTabSpec("TERCEIRA");
+        TabHost.TabSpec aba3=tabHost.newTabSpec("2");
         aba3.setContent(R.id.TERCEIRA);
         aba3.setIndicator("TERCEIRA");
 
@@ -60,17 +62,9 @@ public class Requisicoes extends AppCompatActivity{
         tabHost.addTab(aba2);
         tabHost.addTab(aba3);
 
-
-        velocidade = new Velocidade();
-        rpm = new RPM();
-
         txtVelocidade = (TextView)findViewById(R.id.textView_velocidade);
         txtRPM = (TextView)findViewById(R.id.textView_rpm);
         txtCombustivel = (TextView)findViewById(R.id.textView_combustivel);
-
-        velocidade.start();
-        rpm.start();
-
 
         btnCombustivel = (Button)findViewById(R.id.button_combustivel);
         btnCombustivel.setOnClickListener(new View.OnClickListener() {
@@ -80,20 +74,46 @@ public class Requisicoes extends AppCompatActivity{
             }
         });
 
+
+
+        //Set Threads
+        velocidade = new Velocidade();
+//        rpm = new RPM();
+
+        tabAnterior = "0";
+
+        velocidade.start();
+//        rpm.start();
+
+        //Manage Threads with layout"
+        tabHost.getCurrentTabTag();
         tabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
             @Override
             public void onTabChanged(String tabId) {
+                Log.d("TabChanged", "Mudou");
+                if (tabAnterior == "0"){
+                    Log.d("TabChanged", "Vou parar");
+//                    -----------------------ERRO AQUI - NAO CONSEGUIMOS PARAR A THREAD
+//                    velocidade.interrupt();
+//                    Log.d("Interrupt", String.valueOf(velocidade.isInterrupted()));
+                     velocidade.stop();
+//                    velocidade = null;
+//                    -----------------------ERRO AQUI - NAO CONSEGUIMOS PARAR A THREAD
+                    Log.d("TabChanged", "parei");
 
-                Log.d("COMB 2", " "+ tabHost.getCurrentTab() + " " + tabId);
+//                    rpm.interrupt();
+                }
+//                Log.d("COMB 2", " "+ tabHost.getCurrentTab() + " " + tabId);
             }
         });
     }
+
+
     public void getCombustivel(View v){
         String respDec = Comunicacao.sendReceiveOBD("012F");
         txtCombustivel.setText(respDec + "%");
 
     }
-
 
     public void getVelocidade(View v){
 
@@ -124,7 +144,5 @@ public class Requisicoes extends AppCompatActivity{
             }
         });
     }
-
-
 
 }

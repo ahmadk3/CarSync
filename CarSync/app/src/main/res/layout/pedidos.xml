@@ -15,9 +15,7 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:id="@android:id/tabcontent"
-
         >
-
 
         <RelativeLayout
             android:layout_width="fill_parent"
@@ -26,37 +24,39 @@
             android:paddingTop="160px"
             android:layout_gravity="center_horizontal|top">
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="COMBUSTIVEL"
-                android:id="@+id/button_combustivel"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
-
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="0 Km/h"
+                android:text="0"
                 android:id="@+id/textView_velocidade"
                 android:textSize="36dp"
-                android:layout_below="@+id/textView_rpm"
                 android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
+                android:layout_alignParentStart="true"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"/>
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Km/h"
+                android:id="@+id/textView_velocidadeKM"
+                android:textSize="36dp"
+                android:layout_alignTop="@+id/textView_velocidade"
+                android:layout_alignParentRight="true"
+                android:layout_marginLeft="106dp"
+                android:layout_marginStart="106dp" />
+
+            <TextView
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="0 RPM"
                 android:id="@+id/textView_rpm"
                 android:textSize="36dp"
-                android:layout_alignBottom="@+id/button_combustivel"
-                android:layout_toRightOf="@+id/button_combustivel"
-                android:layout_toEndOf="@+id/button_combustivel" />
+                android:layout_below="@+id/textView_velocidade"
+            />
 
         </RelativeLayout>
 
@@ -67,8 +67,15 @@
             android:paddingTop="160px"
             android:layout_gravity="center_horizontal|top">
 
-
-
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="COMBUSTIVEL"
+                android:id="@+id/button_combustivel"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+            />
 
             <TextView
                 android:layout_width="wrap_content"

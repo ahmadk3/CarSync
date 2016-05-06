@@ -18,6 +18,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -98,6 +99,13 @@ public class ConfiguracaoBluetooth extends AppCompatActivity {
                 connect(v);
             }
         });
+
+//        Display display=getWindowManager().getDefaultDisplay();
+//        int width=display.getWidth();
+//        Log.d("Size = ", String.valueOf(width));
+//        bOn.setWidth((width-1)/2);
+//        Log.d("Bnts size = ", String.valueOf(width/2));
+//        bOff.setWidth((width-1)/2);
 
         IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
         this.registerReceiver(mReceiver, filter);
