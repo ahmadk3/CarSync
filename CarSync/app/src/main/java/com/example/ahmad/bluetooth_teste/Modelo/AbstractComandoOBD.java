@@ -18,7 +18,7 @@ public abstract class AbstractComandoOBD extends Thread{
 
     private String PID;
     private String resposta;
-
+    private boolean isRunning;
 
     public AbstractComandoOBD(String PID){
         setPID(PID);
@@ -43,5 +43,13 @@ public abstract class AbstractComandoOBD extends Thread{
 
     public void setResposta(String resposta) {
         this.resposta = resposta;
+    }
+
+    public boolean isRunning() {
+        return isRunning;
+    }
+
+    public void setRunning(boolean running) {
+        isRunning = running;
     }
 }

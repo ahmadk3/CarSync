@@ -17,26 +17,28 @@ public class Velocidade extends AbstractComandoOBD{
 
     @Override
     public void run() {
-        while(true){
-//            setResposta(Comunicacao.sendReceiveOBD(getPID())); //synchronized function
-//            calculate();
-//            Requisicoes.respVelocidade = getResposta();
-//            Requisicoes.updateRequisicoesView();
-            Log.d("Thread", "teste");
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+        setRunning(true);
+//        while(!this.isInterrupted()){
 
-            if (this.currentThread().isInterrupted() == true){
-//                Log.d("Mano", "PAREI, PARA VC TBM");
-//                super.interrupt();
-//                Log.d("Mano", String.valueOf(super.isInterrupted()));
+        while(isRunning()){
+            setResposta(Comunicacao.sendReceiveOBD(getPID())); //synchronized function
+            calculate();
+            Requisicoes.respVelocidade = getResposta();
+            Requisicoes.updateRequisicoesView();
+//            Log.d("Thread", "teste");
+            if (isRunning()){
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
-
             //Log.d("Velocidade: ", getResposta());
         }
+
+        Log.d("Thread", "SAI DO LOOP DE REQUISICOES");
+        this.currentThread().interrupt();
+        Log.d("Thread", "isInterrupted?" + String.valueOf(this.currentThread().isInterrupted()));
     }
 
     @Override

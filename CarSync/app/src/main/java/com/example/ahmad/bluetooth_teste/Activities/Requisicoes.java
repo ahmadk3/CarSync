@@ -85,7 +85,7 @@ public class Requisicoes extends AppCompatActivity{
         velocidade.start();
 //        rpm.start();
 
-        //Manage Threads with layout"
+        //Manage Threads with layout
         tabHost.getCurrentTabTag();
         tabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
             @Override
@@ -93,12 +93,10 @@ public class Requisicoes extends AppCompatActivity{
                 Log.d("TabChanged", "Mudou");
                 if (tabAnterior == "0"){
                     Log.d("TabChanged", "Vou parar");
-//                    -----------------------ERRO AQUI - NAO CONSEGUIMOS PARAR A THREAD
-//                    velocidade.interrupt();
-//                    Log.d("Interrupt", String.valueOf(velocidade.isInterrupted()));
-                     velocidade.stop();
-//                    velocidade = null;
-//                    -----------------------ERRO AQUI - NAO CONSEGUIMOS PARAR A THREAD
+                    
+                    velocidade.setRunning(false);
+                    Log.d("Running", String.valueOf(velocidade.isRunning()));
+
                     Log.d("TabChanged", "parei");
 
 //                    rpm.interrupt();
