@@ -22,7 +22,7 @@
             android:layout_height="fill_parent"
             android:id="@+id/PRIMEIRA"
             android:paddingTop="160px"
-            android:layout_gravity="center_horizontal|top">
+            android:layout_gravity="left|top">
 
 
             <TextView
@@ -31,10 +31,12 @@
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="0"
                 android:id="@+id/textView_velocidade"
-                android:textSize="36dp"
+                android:textSize="30dp"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_marginLeft="@dimen/activity_horizontal_margin"/>
+                android:layout_marginLeft="@dimen/marginLeft_TxtView"
+                android:textColor="@color/CodeColor"
+            />
 
             <TextView
                 android:layout_width="fill_parent"
@@ -42,21 +44,46 @@
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="Km/h"
                 android:id="@+id/textView_velocidadeKM"
-                android:textSize="36dp"
+                android:textSize="30dp"
                 android:layout_alignTop="@+id/textView_velocidade"
                 android:layout_alignParentRight="true"
                 android:layout_marginLeft="106dp"
-                android:layout_marginStart="106dp" />
+                android:layout_marginStart="106dp"
+                android:gravity="right"
+                android:textColor="@color/CodeColor"
+                android:layout_marginRight="@dimen/marginLeft_TxtView"
+            />
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="0 RPM"
+                android:text="0"
                 android:id="@+id/textView_rpm"
-                android:textSize="36dp"
+                android:textSize="30dp"
                 android:layout_below="@+id/textView_velocidade"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:textColor="@color/CodeColor"
+                android:layout_marginLeft="@dimen/marginLeft_TxtView"
             />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="RPM"
+                android:id="@+id/textView_rpmRPM"
+                android:textSize="30dp"
+                android:layout_alignTop="@+id/textView_rpm"
+                android:layout_alignParentRight="true"
+                android:layout_marginLeft="106dp"
+                android:layout_marginStart="106dp"
+                android:gravity="right"
+                android:textColor="@color/CodeColor"
+                android:layout_marginRight="@dimen/marginRight_TxtView"
+            />
+
 
         </RelativeLayout>
 
@@ -65,7 +92,7 @@
             android:layout_height="fill_parent"
             android:id="@+id/SEGUNDA"
             android:paddingTop="160px"
-            android:layout_gravity="center_horizontal|top">
+            android:layout_gravity="left|top">
 
             <Button
                 android:layout_width="wrap_content"
@@ -95,7 +122,7 @@
             android:layout_height="fill_parent"
             android:id="@+id/TERCEIRA"
             android:paddingTop="160px"
-            android:layout_gravity="center_horizontal|top">
+            android:layout_gravity="left|top">
 
 
             <Button

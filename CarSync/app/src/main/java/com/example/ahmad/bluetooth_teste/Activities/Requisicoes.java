@@ -35,7 +35,7 @@ public class Requisicoes extends AppCompatActivity{
     private RPM rpm;
     private static Handler mHandler = new Handler();
 
-    private String tabAnterior;
+    private int tabAnterior;
 
     public void onCreate(Bundle savedInstanceState){
 
@@ -70,6 +70,7 @@ public class Requisicoes extends AppCompatActivity{
         btnCombustivel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d("Combustivel", "Botao");
                 getCombustivel(v);
             }
         });
@@ -78,12 +79,12 @@ public class Requisicoes extends AppCompatActivity{
 
         //Set Threads
         velocidade = new Velocidade();
-//        rpm = new RPM();
+        rpm = new RPM();
 
-        tabAnterior = "0";
+        tabAnterior = 0;
 
         velocidade.start();
-//        rpm.start();
+        rpm.start();
 
         //Manage Threads with layout
         tabHost.getCurrentTabTag();
@@ -91,16 +92,29 @@ public class Requisicoes extends AppCompatActivity{
             @Override
             public void onTabChanged(String tabId) {
                 Log.d("TabChanged", "Mudou");
-                if (tabAnterior == "0"){
-                    Log.d("TabChanged", "Vou parar");
-                    
-                    velocidade.setRunning(false);
-                    Log.d("Running", String.valueOf(velocidade.isRunning()));
-
-                    Log.d("TabChanged", "parei");
-
+                if (tabAnterior == 0 && tabHost.getCurrentTab() != 0){
+                    velocidade.setSuspend(true);
+                    rpm.setSuspend(true);
+//                    -----------------
+//                    velocidade.setRunning(false);
+//                    Log.d("Running Velocidade", String.valueOf(velocidade.isRunning()));
 //                    rpm.interrupt();
+//                    -----------------
+                    tabAnterior = tabHost.getCurrentTab();
                 }
+                if (tabAnterior != 0 && tabHost.getCurrentTab() == 0){
+                    Log.d("Thread", "Suspend false");
+                    velocidade.notifyThread();
+                    rpm.notifyThread();
+//                    -----------------
+//                    velocidade = new Velocidade();
+//                    velocidade.start();
+//                    Log.d("Running Velocidade", String.valueOf(velocidade.isRunning()));
+//                    rpm.interrupt();
+//                    -----------------
+                    tabAnterior = tabHost.getCurrentTab();
+                }
+
 //                Log.d("COMB 2", " "+ tabHost.getCurrentTab() + " " + tabId);
             }
         });

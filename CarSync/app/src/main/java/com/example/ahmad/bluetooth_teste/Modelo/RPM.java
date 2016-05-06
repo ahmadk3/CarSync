@@ -14,18 +14,31 @@ public class RPM extends AbstractComandoOBD {
 
     @Override
     public void run() {
-        while(true){
+        setSuspend(false);
+        while(!isSuspend()){
             setResposta(Comunicacao.sendReceiveOBD(getPID())); //synchronized function
             calculate();
             Requisicoes.respRPM = getResposta();
             Requisicoes.updateRequisicoesView();
+            Log.d("Thread", "RPM");
             try {
-                Thread.sleep(50);
+                Thread.sleep(1000);
+                if (isSuspend()) {
+                    synchronized(this) {
+                        Log.d("Thread", "Suspender RPM");
+                        wait();
+                        Log.d("Thread", "Sai, não estou mais suspenso RPM");
+                    }
+                }
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            Log.d("RPM ", getResposta());
+//            Log.d("RPM ", getResposta());
         }
+
+//        Log.d("Thread", "SAI DO LOOP DE REQUISICOES DO RPM");
+//        this.currentThread().interrupt();
+//        Log.d("Thread", "isInterrupted?" + String.valueOf(this.currentThread().isInterrupted()));
     }
 
     @Override
@@ -35,5 +48,12 @@ public class RPM extends AbstractComandoOBD {
         Long i = Long.parseLong(respAux, 16);
         i/=4;
         setResposta(Long.toString(i));
+    }
+
+    @Override
+    public synchronized void notifyThread(){
+        setSuspend(false);
+        if (!isSuspend())
+            notify();
     }
 }

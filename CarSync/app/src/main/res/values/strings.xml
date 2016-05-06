@@ -2,4 +2,5 @@
     <string name="app_name">CarSync</string>
     <string name="requisicoes">Requisições</string>
     <string name="config">Configurações</string>
+    <color name="CodeColor" >#808080</color>
 </resources>
