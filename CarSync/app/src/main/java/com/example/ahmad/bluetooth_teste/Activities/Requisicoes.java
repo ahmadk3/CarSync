@@ -68,16 +68,6 @@ public class Requisicoes extends AppCompatActivity{
         txtRPM = (TextView)findViewById(R.id.textView_rpm);
         txtNivelCombustivelTanque = (TextView)findViewById(R.id.textView_combustivel);
 
-        btnCombustivel = (Button)findViewById(R.id.button_combustivel);
-        btnCombustivel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d("Combustivel", "Botao");
-                nivelCombustivelTanque.start();
-            }
-        });
-
-
 
         //Set Threads
         velocidade = new Velocidade();
@@ -115,6 +105,15 @@ public class Requisicoes extends AppCompatActivity{
 //                    Log.d("Running Velocidade", String.valueOf(velocidade.isRunning()));
 //                    rpm.interrupt();
 //                    -----------------
+                    tabAnterior = tabHost.getCurrentTab();
+                }
+                if (tabAnterior != 1 && tabHost.getCurrentTab() == 1){
+                    Log.d("Combustivel", "Botao");
+                    nivelCombustivelTanque.start();
+                    tabAnterior = tabHost.getCurrentTab();
+                }
+                if (tabAnterior == 1 && tabHost.getCurrentTab() != 1){
+                    nivelCombustivelTanque.notifyThread();
                     tabAnterior = tabHost.getCurrentTab();
                 }
 
