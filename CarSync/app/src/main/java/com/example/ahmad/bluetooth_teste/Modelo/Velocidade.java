@@ -29,7 +29,7 @@ public class Velocidade extends AbstractComandoOBD{
             setResposta(Comunicacao.sendReceiveOBD(getPID())); //synchronized function
             calculate();
             Requisicoes.respVelocidade = getResposta();
-            Requisicoes.updateRequisicoesView();
+            Requisicoes.updateRequisicoesViewPerformance();
 //            Log.d("Thread", "velocidade");
             try {
                 Thread.sleep(1000);

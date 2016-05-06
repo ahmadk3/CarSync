@@ -22,7 +22,7 @@
             android:layout_height="fill_parent"
             android:id="@+id/PRIMEIRA"
             android:paddingTop="160px"
-            android:layout_gravity="left|top">
+            android:layout_gravity="center_horizontal|top">
 
 
             <TextView
@@ -92,17 +92,8 @@
             android:layout_height="fill_parent"
             android:id="@+id/SEGUNDA"
             android:paddingTop="160px"
-            android:layout_gravity="left|top">
+            android:layout_gravity="center_horizontal|top">
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="COMBUSTIVEL"
-                android:id="@+id/button_combustivel"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-            />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -110,10 +101,7 @@
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="0 %"
                 android:id="@+id/textView_combustivel"
-                android:textSize="36dp"
-                android:layout_alignBottom="@+id/button_combustivel"
-                android:layout_toRightOf="@+id/button_combustivel"
-                android:layout_toEndOf="@+id/button_combustivel" />
+                android:textSize="36dp" />
 
         </RelativeLayout>
 
@@ -122,7 +110,7 @@
             android:layout_height="fill_parent"
             android:id="@+id/TERCEIRA"
             android:paddingTop="160px"
-            android:layout_gravity="left|top">
+            android:layout_gravity="center_horizontal|top">
 
 
             <Button

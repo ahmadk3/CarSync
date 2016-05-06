@@ -6,37 +6,47 @@ import com.example.ahmad.bluetooth_teste.Activities.Comunicacao;
 import com.example.ahmad.bluetooth_teste.Activities.Requisicoes;
 
 /**
- * Created by ahmad on 27/04/2016.
+ * Created by PamelaPeixinho on 5/6/16.
  */
-public class RPM extends AbstractComandoOBD {
+public class NivelEntradaCombustivelTanque extends AbstractComandoOBD {
 
-    public RPM(){ super("010C"); }
+    public NivelEntradaCombustivelTanque() {
+        super("012F");
+    }
 
     @Override
     public void run() {
         setSuspend(false);
+
+//        -----------------
+//        setRunning(true);
+//        while(!this.isInterrupted()){
+//        while(isRunning()){
+//        -----------------
+
         while(!isSuspend()){
             setResposta(Comunicacao.sendReceiveOBD(getPID())); //synchronized function
             calculate();
-            Requisicoes.respRPM = getResposta();
-            Requisicoes.updateRequisicoesViewPerformance();
-            Log.d("Thread", "RPM");
+            Requisicoes.respNivelCombustivelTanque = getResposta();
+            Requisicoes.updateRequisicoesViewControleGastos();
+            Log.d("Thread", "Nivel Combustivel");
             try {
-                Thread.sleep(1000);
+                Thread.sleep(100000);
                 if (isSuspend()) {
                     synchronized(this) {
-                        Log.d("Thread", "Suspender RPM");
+                        Log.d("Thread", "Suspender Velocidade");
                         wait();
-                        Log.d("Thread", "Sai, não estou mais suspenso RPM");
+                        Log.d("Thread", "Sai, não estou mais suspenso Velocidade");
                     }
                 }
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-//            Log.d("RPM ", getResposta());
+
+            //Log.d("Velocidade: ", getResposta());
         }
 
-//        Log.d("Thread", "SAI DO LOOP DE REQUISICOES DO RPM");
+//        Log.d("Thread", "SAI DO LOOP DE REQUISICOES DA VELOCIDADE");
 //        this.currentThread().interrupt();
 //        Log.d("Thread", "isInterrupted?" + String.valueOf(this.currentThread().isInterrupted()));
     }
@@ -44,14 +54,14 @@ public class RPM extends AbstractComandoOBD {
     @Override
     protected void calculate() {
         String respAux = getResposta();
-        respAux = respAux.substring(respAux.length() - 4);
+        respAux = respAux.substring(respAux.length() - 2);
         Long i = Long.parseLong(respAux, 16);
-        i/=4;
+        i*= (100/255);
         setResposta(Long.toString(i));
     }
 
     @Override
-    public synchronized void notifyThread(){
+    public void notifyThread() {
         setSuspend(false);
         if (!isSuspend())
             notify();
