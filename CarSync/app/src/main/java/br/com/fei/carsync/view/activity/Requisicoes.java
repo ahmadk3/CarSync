@@ -1,4 +1,4 @@
-package com.example.ahmad.bluetooth_teste.Activities;
+package br.com.fei.carsync.view.activity;
 
 import android.os.Bundle;
 
@@ -10,10 +10,10 @@ import android.widget.Button;
 import android.widget.TabHost;
 import android.widget.TextView;
 
-import com.example.ahmad.bluetooth_teste.Modelo.NivelEntradaCombustivelTanque;
-import com.example.ahmad.bluetooth_teste.Modelo.RPM;
-import com.example.ahmad.bluetooth_teste.Modelo.Velocidade;
-import com.example.ahmad.bluetooth_teste.R;
+import br.com.fei.carsync.R;
+import br.com.fei.carsync.manager.model.Velocidade;
+import br.com.fei.carsync.manager.model.NivelEntradaCombustivelTanque;
+import br.com.fei.carsync.manager.model.RPM;
 
 /**
  * Created by ahmad on 25/04/2016.
@@ -35,6 +35,7 @@ public class Requisicoes extends AppCompatActivity{
     private Velocidade velocidade;
     private RPM rpm;
     private NivelEntradaCombustivelTanque nivelCombustivelTanque;
+
     private static Handler mHandler = new Handler();
 
     private int tabAnterior;
@@ -78,13 +79,19 @@ public class Requisicoes extends AppCompatActivity{
 
         velocidade.start();
         rpm.start();
+//        -----
+        nivelCombustivelTanque.start();
+        nivelCombustivelTanque.setSuspend(true);
+//        -----
+
 
         //Manage Threads with layout
         tabHost.getCurrentTabTag();
         tabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
             @Override
             public void onTabChanged(String tabId) {
-                Log.d("TabChanged", "Mudou");
+                Log.d("Thread", "Tabanterior = " + String.valueOf(tabAnterior));
+                Log.d("Thread", "Tabatual = " + String.valueOf(tabHost.getCurrentTab()));
                 if (tabAnterior == 0 && tabHost.getCurrentTab() != 0){
                     velocidade.setSuspend(true);
                     rpm.setSuspend(true);
@@ -93,11 +100,11 @@ public class Requisicoes extends AppCompatActivity{
 //                    Log.d("Running Velocidade", String.valueOf(velocidade.isRunning()));
 //                    rpm.interrupt();
 //                    -----------------
-                    tabAnterior = tabHost.getCurrentTab();
                 }
                 if (tabAnterior != 0 && tabHost.getCurrentTab() == 0){
-                    Log.d("Thread", "Suspend false");
+                    velocidade.setSuspend(false);
                     velocidade.notifyThread();
+                    rpm.setSuspend(false);
                     rpm.notifyThread();
 //                    -----------------
 //                    velocidade = new Velocidade();
@@ -105,18 +112,18 @@ public class Requisicoes extends AppCompatActivity{
 //                    Log.d("Running Velocidade", String.valueOf(velocidade.isRunning()));
 //                    rpm.interrupt();
 //                    -----------------
-                    tabAnterior = tabHost.getCurrentTab();
-                }
-                if (tabAnterior != 1 && tabHost.getCurrentTab() == 1){
-                    Log.d("Combustivel", "Botao");
-                    nivelCombustivelTanque.start();
-                    tabAnterior = tabHost.getCurrentTab();
                 }
                 if (tabAnterior == 1 && tabHost.getCurrentTab() != 1){
+                    nivelCombustivelTanque.setSuspend(true);
+                }
+                if (tabAnterior != 1 && tabHost.getCurrentTab() == 1){
+                    Log.d("Thread", "Suspenso combustivel = " + String.valueOf(nivelCombustivelTanque.isSuspend()));
+                    nivelCombustivelTanque.setSuspend(false);
+                    Log.d("Thread", "Suspenso combustivel = " + String.valueOf(nivelCombustivelTanque.isSuspend()));
                     nivelCombustivelTanque.notifyThread();
-                    tabAnterior = tabHost.getCurrentTab();
                 }
 
+                tabAnterior = tabHost.getCurrentTab();
 //                Log.d("COMB 2", " "+ tabHost.getCurrentTab() + " " + tabId);
             }
         });

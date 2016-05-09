@@ -1,4 +1,4 @@
-package com.example.ahmad.bluetooth_teste.Activities;
+package br.com.fei.carsync.view.activity;
 
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
@@ -12,12 +12,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.example.ahmad.bluetooth_teste.R;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.UUID;
+
+import br.com.fei.carsync.R;
 
 
 /**

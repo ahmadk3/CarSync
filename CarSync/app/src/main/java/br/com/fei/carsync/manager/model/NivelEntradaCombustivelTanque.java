@@ -1,43 +1,41 @@
-package com.example.ahmad.bluetooth_teste.Modelo;
+package br.com.fei.carsync.manager.model;
 
 import android.util.Log;
 
-import com.example.ahmad.bluetooth_teste.Activities.Comunicacao;
-import com.example.ahmad.bluetooth_teste.Activities.Requisicoes;
+import br.com.fei.carsync.view.activity.Comunicacao;
+import br.com.fei.carsync.view.activity.Requisicoes;
 
 /**
- * Created by PamelaPeixinho on 4/27/16.
+ * Created by PamelaPeixinho on 5/6/16.
  */
-public class Velocidade extends AbstractComandoOBD{
+public class NivelEntradaCombustivelTanque extends AbstractComandoOBD {
 
-
-    public Velocidade(){
-        super("010D");
+    public NivelEntradaCombustivelTanque() {
+        super("012F");
     }
 
     @Override
     public void run() {
-        setSuspend(false);
-
 //        -----------------
 //        setRunning(true);
 //        while(!this.isInterrupted()){
 //        while(isRunning()){
 //        -----------------
 
-        while(!isSuspend()){
+        while(true){
             setResposta(Comunicacao.sendReceiveOBD(getPID())); //synchronized function
             calculate();
-            Requisicoes.respVelocidade = getResposta();
-            Requisicoes.updateRequisicoesViewPerformance();
-//            Log.d("Thread", "velocidade");
+            Requisicoes.respNivelCombustivelTanque = getResposta();
+            Requisicoes.updateRequisicoesViewControleGastos();
+            Log.d("Thread", "Nivel Combustivel");
             try {
-                Thread.sleep(1000);
+                sleep(1000);
                 if (isSuspend()) {
                     synchronized(this) {
-                        Log.d("Thread", "Suspender Velocidade");
+                        Log.d("Thread", "Suspender Combustivel");
+                        while(isSuspend())
                             wait();
-                        Log.d("Thread", "Sai, não estou mais suspenso Velocidade");
+                        Log.d("Thread", "Sai, não estou mais suspenso Combustivel");
                     }
                 }
             } catch (InterruptedException e) {
@@ -57,14 +55,14 @@ public class Velocidade extends AbstractComandoOBD{
         String respAux = getResposta();
         respAux = respAux.substring(respAux.length() - 2);
         Long i = Long.parseLong(respAux, 16);
+        i*= (100/255);
         setResposta(Long.toString(i));
     }
 
     @Override
-    public synchronized void notifyThread(){
-
-        setSuspend(false);
-        if (!isSuspend())
+    public synchronized void notifyThread() {
+        if (!isSuspend()){
             notify();
+        }
     }
 }

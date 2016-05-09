@@ -1,9 +1,9 @@
-package com.example.ahmad.bluetooth_teste.Modelo;
+package br.com.fei.carsync.manager.model;
 
 import android.util.Log;
 
-import com.example.ahmad.bluetooth_teste.Activities.Comunicacao;
-import com.example.ahmad.bluetooth_teste.Activities.Requisicoes;
+import br.com.fei.carsync.view.activity.Comunicacao;
+import br.com.fei.carsync.view.activity.Requisicoes;
 
 /**
  * Created by ahmad on 27/04/2016.
@@ -14,8 +14,8 @@ public class RPM extends AbstractComandoOBD {
 
     @Override
     public void run() {
-        setSuspend(false);
-        while(!isSuspend()){
+//        setSuspend(false);
+        while(true){
             setResposta(Comunicacao.sendReceiveOBD(getPID())); //synchronized function
             calculate();
             Requisicoes.respRPM = getResposta();
@@ -26,7 +26,8 @@ public class RPM extends AbstractComandoOBD {
                 if (isSuspend()) {
                     synchronized(this) {
                         Log.d("Thread", "Suspender RPM");
-                        wait();
+                        while(isSuspend())
+                            wait();
                         Log.d("Thread", "Sai, não estou mais suspenso RPM");
                     }
                 }
@@ -52,7 +53,6 @@ public class RPM extends AbstractComandoOBD {
 
     @Override
     public synchronized void notifyThread(){
-        setSuspend(false);
         if (!isSuspend())
             notify();
     }

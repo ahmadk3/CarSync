@@ -9,7 +9,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:id="@android:id/tabs"
-        tools:context=".Activities.Requisicoes"
+        tools:context="br.com.fei.carsync.view.activity.Requisicoes"
         />
     <FrameLayout
         android:layout_width="fill_parent"

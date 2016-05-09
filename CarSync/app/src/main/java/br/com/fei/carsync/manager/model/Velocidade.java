@@ -1,22 +1,23 @@
-package com.example.ahmad.bluetooth_teste.Modelo;
+package br.com.fei.carsync.manager.model;
 
 import android.util.Log;
 
-import com.example.ahmad.bluetooth_teste.Activities.Comunicacao;
-import com.example.ahmad.bluetooth_teste.Activities.Requisicoes;
+import br.com.fei.carsync.view.activity.Comunicacao;
+import br.com.fei.carsync.view.activity.Requisicoes;
 
 /**
- * Created by PamelaPeixinho on 5/6/16.
+ * Created by PamelaPeixinho on 4/27/16.
  */
-public class NivelEntradaCombustivelTanque extends AbstractComandoOBD {
+public class Velocidade extends AbstractComandoOBD{
 
-    public NivelEntradaCombustivelTanque() {
-        super("012F");
+
+    public Velocidade(){
+        super("010D");
     }
 
     @Override
     public void run() {
-        setSuspend(false);
+//        setSuspend(false);
 
 //        -----------------
 //        setRunning(true);
@@ -24,18 +25,20 @@ public class NivelEntradaCombustivelTanque extends AbstractComandoOBD {
 //        while(isRunning()){
 //        -----------------
 
-        while(!isSuspend()){
+        while(true){
             setResposta(Comunicacao.sendReceiveOBD(getPID())); //synchronized function
             calculate();
-            Requisicoes.respNivelCombustivelTanque = getResposta();
-            Requisicoes.updateRequisicoesViewControleGastos();
-            Log.d("Thread", "Nivel Combustivel");
+            Requisicoes.respVelocidade = getResposta();
+            Requisicoes.updateRequisicoesViewPerformance();
+            Log.d("Thread", "velocidade");
             try {
-                Thread.sleep(100000);
+                sleep(1000);
                 if (isSuspend()) {
                     synchronized(this) {
                         Log.d("Thread", "Suspender Velocidade");
-                        wait();
+                        while(isSuspend())
+                            wait();
+
                         Log.d("Thread", "Sai, não estou mais suspenso Velocidade");
                     }
                 }
@@ -56,13 +59,12 @@ public class NivelEntradaCombustivelTanque extends AbstractComandoOBD {
         String respAux = getResposta();
         respAux = respAux.substring(respAux.length() - 2);
         Long i = Long.parseLong(respAux, 16);
-        i*= (100/255);
         setResposta(Long.toString(i));
     }
 
     @Override
-    public void notifyThread() {
-        setSuspend(false);
+    public synchronized void notifyThread(){
+
         if (!isSuspend())
             notify();
     }
