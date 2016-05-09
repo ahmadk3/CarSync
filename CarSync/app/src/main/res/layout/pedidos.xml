@@ -22,7 +22,7 @@
             android:layout_height="fill_parent"
             android:id="@+id/PRIMEIRA"
             android:paddingTop="160px"
-            android:layout_gravity="center_horizontal|top">
+            android:layout_gravity="left|top">
 
 
             <TextView
@@ -92,16 +92,37 @@
             android:layout_height="fill_parent"
             android:id="@+id/SEGUNDA"
             android:paddingTop="160px"
-            android:layout_gravity="center_horizontal|top">
+            android:layout_gravity="left|top">
 
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="0 %"
+                android:text="0"
                 android:id="@+id/textView_combustivel"
-                android:textSize="36dp" />
+                android:textSize="30dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginLeft="@dimen/marginLeft_TxtView"
+                android:textColor="@color/CodeColor"
+                />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="%"
+                android:id="@+id/textView_combustivelPorcentagem"
+                android:textSize="30dp"
+                android:layout_alignTop="@+id/textView_combustivel"
+                android:layout_alignParentRight="true"
+                android:layout_marginLeft="106dp"
+                android:layout_marginStart="106dp"
+                android:gravity="right"
+                android:textColor="@color/CodeColor"
+                android:layout_marginRight="@dimen/marginLeft_TxtView"
+                />
 
         </RelativeLayout>
 
@@ -110,17 +131,37 @@
             android:layout_height="fill_parent"
             android:id="@+id/TERCEIRA"
             android:paddingTop="160px"
-            android:layout_gravity="center_horizontal|top">
+            android:layout_gravity="left|top">
 
-
-            <Button
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Botao C"
-                android:id="@+id/buttonC"
-                android:layout_below="@+id/textView"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="0"
+                android:id="@+id/textView_tempOleoMotor"
+                android:textSize="30dp"
                 android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
+                android:layout_alignParentStart="true"
+                android:layout_marginLeft="@dimen/marginLeft_TxtView"
+                android:textColor="@color/CodeColor"
+                />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="ºC"
+                android:id="@+id/textView_tempOleoMotorGraus"
+                android:textSize="30dp"
+                android:layout_alignTop="@+id/textView_tempOleoMotor"
+                android:layout_alignParentRight="true"
+                android:layout_marginLeft="106dp"
+                android:layout_marginStart="106dp"
+                android:gravity="right"
+                android:textColor="@color/CodeColor"
+                android:layout_marginRight="@dimen/marginLeft_TxtView"
+                />
+
 
         </LinearLayout>
 
