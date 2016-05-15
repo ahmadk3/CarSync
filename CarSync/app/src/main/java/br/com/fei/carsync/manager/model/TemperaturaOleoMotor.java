@@ -10,8 +10,8 @@ import br.com.fei.carsync.view.activity.Requisicoes;
  */
     public class TemperaturaOleoMotor extends AbstractComandoOBD {
 
-            public TemperaturaOleoMotor(){ super("015C"); }
-
+//            public TemperaturaOleoMotor(){ super("015C"); }
+            public TemperaturaOleoMotor(){ super("010C"); }
             @Override
             public void run() {
     //        setSuspend(false);
@@ -19,7 +19,7 @@ import br.com.fei.carsync.view.activity.Requisicoes;
                     setResposta(Comunicacao.sendReceiveOBD(getPID())); //synchronized function
                     calculate();
                     Requisicoes.respTemperaturaOleoMotor = getResposta();
-                    Requisicoes.updateRequisicoesViewPrevencao();
+                    Requisicoes.updateRequisicoesView();
                     Log.d("Thread", "Temp Oleo");
                     try {
                         Thread.sleep(1000);
@@ -45,12 +45,17 @@ import br.com.fei.carsync.view.activity.Requisicoes;
             @Override
             protected void calculate() {
                 String respAux = getResposta();
-                respAux = respAux.substring(respAux.length() - 2);
-                Log.d("Thread", "Resp TempOleoMotor: " + respAux);
-                Long i = Long.parseLong(respAux, 16);
-                i-=40;
-                Log.d("Thread", "Resp TempOleoMotor Dec: " + String.valueOf(i));
-                setResposta(Long.toString(i));
+                if (respAux.equals("?"))
+                    setResposta(respAux);
+                else{
+                    respAux = respAux.substring(respAux.length() - 2);
+                    Log.d("Thread", "Resp TempOleoMotor: " + respAux);
+                    Long i = Long.parseLong(respAux, 16);
+                    i-=40;
+                    Log.d("Thread", "Resp TempOleoMotor Dec: " + String.valueOf(i));
+                    setResposta(Long.toString(i));
+                }
+
             }
 
             @Override

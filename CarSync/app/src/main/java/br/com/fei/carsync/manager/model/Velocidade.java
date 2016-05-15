@@ -26,11 +26,13 @@ public class Velocidade extends AbstractComandoOBD{
 //        -----------------
 
         while(true){
+            Log.d("TAG", "Velocidade");
             setResposta(Comunicacao.sendReceiveOBD(getPID())); //synchronized function
             calculate();
             Requisicoes.respVelocidade = getResposta();
-            Requisicoes.updateRequisicoesViewPerformance();
-            Log.d("Thread", "velocidade");
+            Log.d("TAG", "resp = " + getResposta());
+            Requisicoes.updateRequisicoesView();
+
             try {
                 sleep(1000);
                 if (isSuspend()) {
@@ -57,6 +59,9 @@ public class Velocidade extends AbstractComandoOBD{
     @Override
     protected void calculate() {
         String respAux = getResposta();
+        Log.d("TAG", respAux);
+        if (!respAux.substring(0,2).equals("41"))
+            return;
         respAux = respAux.substring(respAux.length() - 2);
         Long i = Long.parseLong(respAux, 16);
         setResposta(Long.toString(i));

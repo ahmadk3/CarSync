@@ -24,19 +24,20 @@ public class NivelEntradaCombustivelTanque extends AbstractComandoOBD {
 //        -----------------
 
         while(true){
+            Log.d("Thread", "Nivel Combustivel");
             setResposta(Comunicacao.sendReceiveOBD(getPID())); //synchronized function
             calculate();
             Requisicoes.respNivelCombustivelTanque = getResposta();
-            Requisicoes.updateRequisicoesViewControleGastos();
-            Log.d("Thread", "Nivel Combustivel");
+            Requisicoes.updateRequisicoesView();
+            Log.d("TAG", "Resp = " + getResposta());
             try {
                 sleep(1000);
                 if (isSuspend()) {
                     synchronized(this) {
-                        Log.d("Thread", "Suspender Combustivel");
+                        Log.d("TAG", "Suspender Combustivel");
                         while(isSuspend())
                             wait();
-                        Log.d("Thread", "Sai, não estou mais suspenso Combustivel");
+                        Log.d("TAG", "Sai, não estou mais suspenso Combustivel");
                     }
                 }
             } catch (InterruptedException e) {
@@ -54,12 +55,18 @@ public class NivelEntradaCombustivelTanque extends AbstractComandoOBD {
     @Override
     protected void calculate() {
         String respAux = getResposta();
-        respAux = respAux.substring(respAux.length() - 2);
-        Log.d("Thread", "Resp Combustivel: " + respAux);
-        Long i = Long.parseLong(respAux, 16);
-        i*= (100/255);
-        Log.d("Thread", "Resp Combustivel Dec: " + String.valueOf(i));
-        setResposta(Long.toString(i));
+        if (respAux.equals("NODATA")) {
+            setResposta(respAux);
+        }
+        else {
+            respAux = respAux.substring(respAux.length() - 2);
+            Log.d("Thread", "Resp Combustivel: " + respAux);
+            Long i = Long.parseLong(respAux, 16);
+            i*= (100/255);
+            Log.d("Thread", "Resp Combustivel Dec: " + String.valueOf(i));
+            setResposta(Long.toString(i));
+        }
+
     }
 
     @Override

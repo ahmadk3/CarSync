@@ -1,5 +1,6 @@
 package br.com.fei.carsync.view.activity;
 
+import android.net.Uri;
 import android.os.Bundle;
 
 import android.os.Handler;
@@ -10,6 +11,10 @@ import android.widget.Button;
 import android.widget.TabHost;
 import android.widget.TextView;
 
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.common.api.GoogleApiClient;
+
 import br.com.fei.carsync.R;
 import br.com.fei.carsync.manager.model.TemperaturaOleoMotor;
 import br.com.fei.carsync.manager.model.Velocidade;
@@ -19,7 +24,7 @@ import br.com.fei.carsync.manager.model.RPM;
 /**
  * Created by ahmad on 25/04/2016.
  */
-public class Requisicoes extends AppCompatActivity{
+public class Requisicoes extends AppCompatActivity {
 
 
     private TabHost tabHost;
@@ -45,13 +50,19 @@ public class Requisicoes extends AppCompatActivity{
 
     private int tabAnterior;
 
-    public void onCreate(Bundle savedInstanceState){
+    public void onCreate(Bundle savedInstanceState) {
 
         //Set Layout
         super.onCreate(savedInstanceState);
         setContentView(R.layout.pedidos);
 
-        tabHost=(TabHost)findViewById(R.id.tabHost);
+        tabHost = (TabHost) findViewById(R.id.tabHost);
+
+        if (tabHost == null) {
+            Log.d("Thread", "TabHost == NULL");
+            return;
+        }
+
         tabHost.setup();
 
         TabHost.TabSpec aba1 = tabHost.newTabSpec("0");
@@ -70,29 +81,33 @@ public class Requisicoes extends AppCompatActivity{
         tabHost.addTab(aba2);
         tabHost.addTab(aba3);
 
-        txtVelocidade = (TextView)findViewById(R.id.textView_velocidade);
-        txtRPM = (TextView)findViewById(R.id.textView_rpm);
-        txtNivelCombustivelTanque = (TextView)findViewById(R.id.textView_combustivel);
-        txtTemperaturaOleoMotor = (TextView)findViewById(R.id.textView_combustivel);
+        txtVelocidade = (TextView) findViewById(R.id.textView_velocidade);
+        txtRPM = (TextView) findViewById(R.id.textView_rpm);
+//        txtNivelCombustivelTanque = (TextView)findViewById(R.id.textView_combustivel);
+        txtTemperaturaOleoMotor = (TextView) findViewById(R.id.textView_tempOleoMotor);
 
+        Log.d("TAG", "ESTOU AQUI");
 
         //Set Threads
         velocidade = new Velocidade();
         rpm = new RPM();
-        nivelCombustivelTanque = new NivelEntradaCombustivelTanque();
-        temperaturaOleoMotor = new TemperaturaOleoMotor();
+//        nivelCombustivelTanque = new NivelEntradaCombustivelTanque();
+//        temperaturaOleoMotor = new TemperaturaOleoMotor();
 
         tabAnterior = 0;
 
         velocidade.start();
+        Log.d("TAG", "start velocidade");
         rpm.start();
+        Log.d("TAG", "start RPM");
+
 //        -----
-        nivelCombustivelTanque.start();
-        nivelCombustivelTanque.setSuspend(true);
+//        nivelCombustivelTanque.start();
+//        nivelCombustivelTanque.setSuspend(true);
 //        -----
 //        -----
-        temperaturaOleoMotor.start();
-        temperaturaOleoMotor.setSuspend(true);
+//        temperaturaOleoMotor.start();
+//        temperaturaOleoMotor.setSuspend(true);
 //        -----
 
         //Manage Threads with layout
@@ -100,24 +115,24 @@ public class Requisicoes extends AppCompatActivity{
         tabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
             @Override
             public void onTabChanged(String tabId) {
-                Log.d("Thread", "Tabanterior = " + String.valueOf(tabAnterior));
-                Log.d("Thread", "Tabatual = " + String.valueOf(tabHost.getCurrentTab()));
+                Log.d("TAG", "Tabanterior = " + String.valueOf(tabAnterior));
+                Log.d("TAG", "Tabatual = " + String.valueOf(tabHost.getCurrentTab()));
 
-                if (tabAnterior == 0 && tabHost.getCurrentTab() != 0){
-                    velocidade.setSuspend(true);
-                    rpm.setSuspend(true);
+                if (tabAnterior == 0 && tabHost.getCurrentTab() != 0) {
+//                    velocidade.setSuspend(true);
+//                    rpm.setSuspend(true);
 //                    -----------------
 //                    velocidade.setRunning(false);
 //                    Log.d("Running Velocidade", String.valueOf(velocidade.isRunning()));
 //                    rpm.interrupt();
 //                    -----------------
                 }
-                if (tabAnterior != 0 && tabHost.getCurrentTab() == 0){
-                    velocidade.setSuspend(false);
-                    velocidade.notifyThread();
-
-                    rpm.setSuspend(false);
-                    rpm.notifyThread();
+                if (tabAnterior != 0 && tabHost.getCurrentTab() == 0) {
+//                    velocidade.setSuspend(false);
+//                    velocidade.notifyThread();
+//
+//                    rpm.setSuspend(false);
+//                    rpm.notifyThread();
 
 //                    -----------------
 //                    velocidade = new Velocidade();
@@ -126,19 +141,19 @@ public class Requisicoes extends AppCompatActivity{
 //                    rpm.interrupt();
 //                    -----------------
                 }
-                if (tabAnterior == 1 && tabHost.getCurrentTab() != 1){
-                    nivelCombustivelTanque.setSuspend(true);
+                if (tabAnterior == 1 && tabHost.getCurrentTab() != 1) {
+//                    nivelCombustivelTanque.setSuspend(true);
                 }
-                if (tabAnterior != 1 && tabHost.getCurrentTab() == 1){
-                    nivelCombustivelTanque.setSuspend(false);
-                    nivelCombustivelTanque.notifyThread();
+                if (tabAnterior != 1 && tabHost.getCurrentTab() == 1) {
+//                    nivelCombustivelTanque.setSuspend(false);
+//                    nivelCombustivelTanque.notifyThread();
                 }
-                if (tabAnterior == 2 && tabHost.getCurrentTab() != 2){
-                    temperaturaOleoMotor.setSuspend(true);
+                if (tabAnterior == 2 && tabHost.getCurrentTab() != 2) {
+//                    temperaturaOleoMotor.setSuspend(true);
                 }
-                if (tabAnterior != 2 && tabHost.getCurrentTab() == 2){
-                    temperaturaOleoMotor.setSuspend(false);
-                    temperaturaOleoMotor.notifyThread();
+                if (tabAnterior != 2 && tabHost.getCurrentTab() == 2) {
+//                    temperaturaOleoMotor.setSuspend(false);
+//                    temperaturaOleoMotor.notifyThread();
                 }
 
                 tabAnterior = tabHost.getCurrentTab();
@@ -147,34 +162,27 @@ public class Requisicoes extends AppCompatActivity{
         });
     }
 
-    public synchronized static void updateRequisicoesViewPerformance(){
+    public synchronized static void updateRequisicoesView() {
         mHandler.post(new Runnable() {
             @Override
             public void run() {
                 txtVelocidade.setText(respVelocidade);
                 txtRPM.setText(respRPM);
-
+//                txtNivelCombustivelTanque.setText(respNivelCombustivelTanque);
+//                txtTemperaturaOleoMotor.setText(respTemperaturaOleoMotor);
             }
         });
     }
 
-    public synchronized static void updateRequisicoesViewControleGastos(){
-        mHandler.post(new Runnable() {
-            @Override
-            public void run() {
-               txtNivelCombustivelTanque.setText(respNivelCombustivelTanque);
-
-            }
-        });
+    @Override
+    public void onStop() {
+        super.onStop();
+        Comunicacao.closeSocketConnection();
     }
 
-    public synchronized static void updateRequisicoesViewPrevencao(){
-        mHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                txtTemperaturaOleoMotor.setText(respTemperaturaOleoMotor);
-            }
-        });
+    @Override
+    public void onDestroy(){
+        Comunicacao.closeSocketConnection();
+        Log.d("TAG", "Destroy");
     }
-
 }
