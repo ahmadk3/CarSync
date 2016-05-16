@@ -51,7 +51,7 @@ public class RPM extends AbstractComandoOBD {
         String respAux = getResposta();
         if (!respAux.substring(0,2).equals("41"))
             return;
-        Log.d("TAG ","resp: " +respAux );
+        Log.d("TAG ","resp: " + respAux );
         respAux = respAux.substring(respAux.length() - 4);
         Long i = Long.parseLong(respAux, 16);
         i/=4;
