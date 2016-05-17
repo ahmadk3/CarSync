@@ -124,13 +124,6 @@ public class Comunicacao extends AppCompatActivity {
     }
 
     public synchronized static String sendReceiveOBD(String cod) {
-//        try {
-//            in = socket.getInputStream();
-//            out = socket.getOutputStream();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//            Log.d("TAG", "COMUNICACAO COM OUT E IN DO OBD");
-//        }
 
         try {
             out.write((cod + "\r").getBytes());
@@ -179,9 +172,9 @@ public class Comunicacao extends AppCompatActivity {
 
     protected static void closeSocketConnection(){
         try {
-            Log.d("TAG", String.valueOf(socket.isConnected()));
-            Log.d("TAG", "Close socket");
-            if (socket != null && socket.isConnected())
+//            Log.d("TAG", String.valueOf(socket.isConnected()));
+//            Log.d("TAG", "Close socket");
+            if (socket != null)
                 socket.close();
             socket = null;
 
@@ -190,4 +183,9 @@ public class Comunicacao extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onDestroy(){
+        closeSocketConnection();
+        Log.d("TAG", "Destroy");
+    }
 }

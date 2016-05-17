@@ -22,7 +22,6 @@ public class Requisicoes extends AppCompatActivity {
 
 
     private TabHost tabHost;
-    private Button btnCombustivel;
 
     private static TextView txtVelocidade;
     private static TextView txtRPM;

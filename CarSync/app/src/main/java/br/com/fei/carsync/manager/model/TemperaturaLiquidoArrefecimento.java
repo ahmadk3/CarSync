@@ -10,7 +10,11 @@ import br.com.fei.carsync.view.activity.Requisicoes;
  */
     public class TemperaturaLiquidoArrefecimento extends AbstractComandoOBD {
 
-            public TemperaturaLiquidoArrefecimento(){ super("0105"); }
+    // TESTAR
+//    1F - Time Since Engine Start
+//public TemperaturaLiquidoArrefecimento(){ super("011F"); }
+
+    public TemperaturaLiquidoArrefecimento(){ super("0105"); }
 
             @Override
             public void run() {
