@@ -1,6 +1,7 @@
 package br.com.fei.carsync.manager.model;
 
 import android.util.Log;
+import android.util.StringBuilderPrinter;
 
 import br.com.fei.carsync.view.activity.Comunicacao;
 import br.com.fei.carsync.view.activity.Requisicoes;
@@ -58,10 +59,10 @@ public class CargaMotor extends AbstractComandoOBD {
             return;
         setResposta(respAux);
         respAux = respAux.substring(respAux.length() - 2);
-        Long i = Long.parseLong(respAux, 16);
-        i*= (100/255);
+        double i = Long.parseLong(respAux, 16);
+        i*= (100/255.0);
         Log.d("Thread", "Resp CargaMotor Dec: " + String.valueOf(i));
-        setResposta(Long.toString(i));
+        setResposta(String.valueOf(i));
     }
 
     @Override

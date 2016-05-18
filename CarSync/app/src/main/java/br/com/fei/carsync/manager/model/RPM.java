@@ -27,14 +27,14 @@ public class RPM extends AbstractComandoOBD {
 
             try {
                 Thread.sleep(1000);
-//                if (isSuspend()) {
-//                    synchronized(this) {
-//                        Log.d("TAG", "Suspender RPM");
-//                        while(isSuspend())
-//                            wait();
-//                        Log.d("TAG", "Sai, não estou mais suspenso RPM");
-//                    }
-//                }
+                if (isSuspend()) {
+                    synchronized(this) {
+                        Log.d("TAG", "Suspender RPM");
+                        while(isSuspend())
+                            wait();
+                        Log.d("TAG", "Sai, não estou mais suspenso RPM");
+                    }
+                }
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
