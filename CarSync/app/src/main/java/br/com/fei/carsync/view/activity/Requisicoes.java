@@ -176,6 +176,7 @@ public class Requisicoes extends AppCompatActivity {
 
     @Override
     public void onDestroy(){
+        super.onDestroy();
         Comunicacao.closeSocketConnection();
         Log.d("TAG", "Destroy");
     }

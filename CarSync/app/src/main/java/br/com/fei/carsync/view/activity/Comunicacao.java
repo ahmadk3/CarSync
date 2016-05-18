@@ -185,6 +185,7 @@ public class Comunicacao extends AppCompatActivity {
 
     @Override
     public void onDestroy(){
+        super.onDestroy();
         closeSocketConnection();
         Log.d("TAG", "Destroy");
     }
